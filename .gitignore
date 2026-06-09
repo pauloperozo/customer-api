@@ -1,0 +1,19 @@
+# Binarios compilados (Go genera ejecutables independientes)
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+customer-api
+
+# Variables de entorno locales (las usaremos más adelante)
+.env
+
+# Carpetas de IDEs comunes
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
