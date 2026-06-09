@@ -11,7 +11,7 @@ func main() {
 	fmt.Println("Starting Customer API...")
 	db := storage.InitDb()
 
-	repo := customer.NewRepository(db)
+	service := customer.NewService(customer.NewRepository(db))
 
 	customer_1 := &customer.Customer{
 		ID:        "1",
@@ -20,13 +20,26 @@ func main() {
 		Email:     "john.doe@example.com",
 	}
 
-	err := repo.Create(customer_1)
+	err := service.CreateCustomer(customer_1)
 	if err != nil {
 		fmt.Println("Error creating customer:", err)
 		return
 	}
 
-	list, err := repo.GetAll()
+	customer_2 := &customer.Customer{
+		ID:        "2",
+		FirstName: "Jane",
+		LastName:  "Doe",
+		Email:     "john.doe@example.com",
+	}
+
+	err = service.CreateCustomer(customer_2)
+	if err != nil {
+		fmt.Println("Error creating customer:", err)
+		return
+	}
+
+	list, err := service.GetAllCustomers()
 	if err != nil {
 		fmt.Println("Error getting customers:", err)
 		return
