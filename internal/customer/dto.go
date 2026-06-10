@@ -7,7 +7,7 @@ type CreateCustomerRequest struct {
 	Language  string `json:"language" binding:"required"`
 }
 
-type CustomerResponse struct {
+type CreateCustomerResponse struct {
 	ID        string `json:"id"`
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`

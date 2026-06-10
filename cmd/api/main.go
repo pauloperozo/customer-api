@@ -4,6 +4,8 @@ import (
 	"customer-api/internal/customer"
 	"customer-api/platform/storage"
 	"fmt"
+	"log"
+	"net/http"
 )
 
 func main() {
@@ -11,40 +13,16 @@ func main() {
 	fmt.Println("Starting Customer API...")
 	db := storage.InitDb()
 
-	service := customer.NewService(customer.NewRepository(db))
+	repo := customer.NewRepository(db)
+	service := customer.NewService(repo)
+	handler := customer.NewHandler(*service)
 
-	customer_1 := &customer.Customer{
-		ID:        "1",
-		FirstName: "John",
-		LastName:  "Doe",
-		Email:     "john.doe@example.com",
-	}
-
-	err := service.CreateCustomer(customer_1)
+	mux := http.NewServeMux()
+	mux.HandleFunc("POST /api/v1/customers", handler.Create)
+	port := ":8080"
+	fmt.Printf("Server is running on http://localhost%s\n", port)
+	err := http.ListenAndServe(port, mux)
 	if err != nil {
-		fmt.Println("Error creating customer:", err)
-		return
+		log.Fatalf("Error al encender el servidor: %v", err)
 	}
-
-	customer_2 := &customer.Customer{
-		ID:        "2",
-		FirstName: "Jane",
-		LastName:  "Doe",
-		Email:     "john.doe@example.com",
-	}
-
-	err = service.CreateCustomer(customer_2)
-	if err != nil {
-		fmt.Println("Error creating customer:", err)
-		return
-	}
-
-	list, err := service.GetAllCustomers()
-	if err != nil {
-		fmt.Println("Error getting customers:", err)
-		return
-	}
-
-	fmt.Println("Customers:", list)
-	fmt.Println("Customer API is running...")
 }
