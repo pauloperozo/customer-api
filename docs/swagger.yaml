@@ -1,0 +1,9 @@
+basePath: /api/v1
+host: localhost:8080
+info:
+  contact: {}
+  description: Este es un servidor de ejemplo para la gestión de clientes en Go.
+  title: Customer API
+  version: "1.0"
+paths: {}
+swagger: "2.0"

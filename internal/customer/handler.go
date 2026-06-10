@@ -13,6 +13,19 @@ func NewHandler(service Service) *Handler {
 	return &Handler{service: service}
 }
 
+// Create handles POST /api/v1/customers
+// @Summary      Crear un nuevo cliente
+// @Description  Registra un cliente en el sistema validando que el email sea único.
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Param        customer  body      CreateCustomerRequest  true  "Datos del cliente a crear"
+// @Success      200       {object}  CreateCustomerResponse
+// @Failure      400       {object}  map[string]string  "JSON inválido o malformado"
+// @Failure      409       {object}  map[string]string  "El email ya está registrado"
+// @Failure      500       {object}  map[string]string  "Error interno del servidor"
+// @Router       /api/v1/customers [post]
+
 func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
 
