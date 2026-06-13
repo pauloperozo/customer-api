@@ -2,6 +2,7 @@ package customer
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 
 	"github.com/google/uuid"
@@ -47,6 +48,10 @@ func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 
 	err = handler.service.CreateCustomer(newCustomer)
 	if err != nil {
+		if errors.Is(err, ErrCustomerAlreadyExists) {
+			http.Error(res, err.Error(), http.StatusConflict)
+			return
+		}
 		http.Error(res, err.Error(), http.StatusInternalServerError)
 		return
 	}
