@@ -9,6 +9,9 @@ customer-api
 # Variables de entorno locales (las usaremos más adelante)
 .env
 
+# Ejecutable temporal de desarrollo
+tmp/main
+
 # Carpetas de IDEs comunes
 .idea/
 .vscode/
