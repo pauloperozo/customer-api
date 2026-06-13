@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/customers": {
+        "/customers": {
             "post": {
                 "description": "Registra un cliente en el sistema validando que el email sea único.",
                 "consumes": [

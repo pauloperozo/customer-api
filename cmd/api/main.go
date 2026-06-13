@@ -16,7 +16,6 @@ import (
 // @description     Este es un servidor de ejemplo para la gestión de clientes en Go.
 // @host            localhost:8080
 // @BasePath        /api/v1
-
 func main() {
 
 	fmt.Println("Starting Customer API...")

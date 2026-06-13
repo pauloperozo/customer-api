@@ -38,7 +38,7 @@ info:
   title: Customer API
   version: "1.0"
 paths:
-  /api/v1/customers:
+  /customers:
     post:
       consumes:
       - application/json

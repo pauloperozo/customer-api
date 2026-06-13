@@ -9,7 +9,7 @@
     "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
-        "/api/v1/customers": {
+        "/customers": {
             "post": {
                 "description": "Registra un cliente en el sistema validando que el email sea único.",
                 "consumes": [
