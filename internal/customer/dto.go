@@ -15,3 +15,11 @@ type CreateCustomerResponse struct {
 	Language  string `json:"language"`
 	Status    string `json:"status"`
 }
+
+type ResponseCustomer struct {
+	ID        string `json:"id"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Email     string `json:"email"`
+	Language  string `json:"language"`
+}

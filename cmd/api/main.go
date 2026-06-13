@@ -28,6 +28,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.Handle("/swagger/", httpSwagger.WrapHandler)
 	mux.HandleFunc("POST /api/v1/customers", handler.Create)
+	mux.HandleFunc("GET /api/v1/customers", handler.List)
 	port := ":8080"
 	fmt.Printf("Server is running on http://localhost%s\n", port)
 	err := http.ListenAndServe(port, mux)

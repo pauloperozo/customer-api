@@ -20,7 +20,7 @@ func NewHandler(service Service) *Handler {
 // @Accept       json
 // @Produce      json
 // @Param        customer  body      CreateCustomerRequest  true  "Datos del cliente a crear"
-// @Success      200       {object}  CreateCustomerResponse
+// @Success      200       {object}  ResponseCustomer
 // @Failure      400       {object}  map[string]string  "JSON inválido o malformado"
 // @Failure      409       {object}  map[string]string  "El email ya está registrado"
 // @Failure      500       {object}  map[string]string  "Error interno del servidor"
@@ -55,6 +55,41 @@ func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 		LastName:  newCustomer.LastName,
 		Email:     newCustomer.Email,
 		Language:  newCustomer.Language,
+	}
+
+	json.NewEncoder(res).Encode(response)
+
+}
+
+// List handles GET /customers
+// @Summary      Obtener clientes
+// @Description  Obtiene un cliente por ID o lista todos los clientes.
+// @Tags         Customers
+// @Accept       json
+// @Produce      json
+// @Success      200       {array}   ResponseCustomer
+// @Failure      400       {object}  map[string]string  "JSON inválido o malformado"
+// @Failure      409       {object}  map[string]string  "El email ya está registrado"
+// @Failure      500       {object}  map[string]string  "Error interno del servidor"
+// @Router       /customers [get]
+func (handler *Handler) List(res http.ResponseWriter, req *http.Request) {
+
+	res.Header().Set("Content-Type", "application/json")
+	customers, err := handler.service.GetAllCustomers()
+	if err != nil {
+		http.Error(res, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	response := make([]ResponseCustomer, 0, len(customers))
+	for _, customer := range customers {
+		response = append(response, ResponseCustomer{
+			ID:        customer.ID,
+			FirstName: customer.FirstName,
+			LastName:  customer.LastName,
+			Email:     customer.Email,
+			Language:  customer.Language,
+		})
 	}
 
 	json.NewEncoder(res).Encode(response)

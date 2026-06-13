@@ -16,6 +16,57 @@ const docTemplate = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/customers": {
+            "get": {
+                "description": "Obtiene un cliente por ID o lista todos los clientes.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Customers"
+                ],
+                "summary": "Obtener clientes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/internal_customer.ResponseCustomer"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "JSON inválido o malformado",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "El email ya está registrado",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error interno del servidor",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Registra un cliente en el sistema validando que el email sea único.",
                 "consumes": [
@@ -43,7 +94,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/internal_customer.CreateCustomerResponse"
+                            "$ref": "#/definitions/internal_customer.ResponseCustomer"
                         }
                     },
                     "400": {
@@ -101,7 +152,7 @@ const docTemplate = `{
                 }
             }
         },
-        "internal_customer.CreateCustomerResponse": {
+        "internal_customer.ResponseCustomer": {
             "type": "object",
             "properties": {
                 "email": {
@@ -117,9 +168,6 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "last_name": {
-                    "type": "string"
-                },
-                "status": {
                     "type": "string"
                 }
             }
