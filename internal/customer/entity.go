@@ -7,7 +7,7 @@ import (
 
 // Entity definition for Customer
 type Customer struct {
-	ID        string     `gorm:"primaryKey;index"`
+	ID        string     `gorm:"type:text;primaryKey"`
 	FirstName string     `gorm:"size:100;not null"`
 	LastName  string     `gorm:"size:100;not null"`
 	Email     string     `gorm:"size:100;not null;unique"`

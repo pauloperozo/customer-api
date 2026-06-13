@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"customer-api/internal/customer"
 	"log"
 
 	"gorm.io/driver/sqlite"
@@ -11,7 +10,7 @@ import (
 
 var DB *gorm.DB
 
-func InitDb() *gorm.DB {
+func InitDb(models ...interface{}) *gorm.DB {
 
 	var err error
 
@@ -27,7 +26,7 @@ func InitDb() *gorm.DB {
 
 	log.Println("Conexion OK ")
 
-	err = DB.AutoMigrate(&customer.Customer{})
+	err = DB.AutoMigrate(models...)
 	if err != nil {
 		log.Fatalf("Error en migrar la db: %v", err)
 	}

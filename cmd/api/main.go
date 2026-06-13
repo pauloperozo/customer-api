@@ -19,7 +19,7 @@ import (
 func main() {
 
 	fmt.Println("Starting Customer API...")
-	db := storage.InitDb()
+	db := storage.InitDb(&customer.Customer{})
 
 	repo := customer.NewRepository(db)
 	service := customer.NewService(repo)
