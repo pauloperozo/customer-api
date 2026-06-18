@@ -1,0 +1,113 @@
+basePath: /api/v1
+definitions:
+  internal_customer.CreateCustomerRequest:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      language:
+        type: string
+      last_name:
+        type: string
+    required:
+    - email
+    - first_name
+    - language
+    - last_name
+    type: object
+  internal_customer.ResponseCustomer:
+    properties:
+      email:
+        type: string
+      first_name:
+        type: string
+      id:
+        type: string
+      language:
+        type: string
+      last_name:
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Este es un servidor de ejemplo para la gestión de clientes en Go.
+  title: Customer API
+  version: "1.0"
+paths:
+  /customers:
+    get:
+      consumes:
+      - application/json
+      description: Obtiene un cliente por ID o lista todos los clientes.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/internal_customer.ResponseCustomer'
+            type: array
+        "400":
+          description: JSON inválido o malformado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: El email ya está registrado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error interno del servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Obtener clientes
+      tags:
+      - Customers
+    post:
+      consumes:
+      - application/json
+      description: Registra un cliente en el sistema validando que el email sea único.
+      parameters:
+      - description: Datos del cliente a crear
+        in: body
+        name: customer
+        required: true
+        schema:
+          $ref: '#/definitions/internal_customer.CreateCustomerRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/internal_customer.ResponseCustomer'
+        "400":
+          description: JSON inválido o malformado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "409":
+          description: El email ya está registrado
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Error interno del servidor
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Crear un nuevo cliente
+      tags:
+      - Customers
+swagger: "2.0"
