@@ -2,8 +2,9 @@ package customer
 
 import (
 	"encoding/json"
-	"errors"
 	"net/http"
+
+	"customer-api/internal/shared"
 
 	"github.com/google/uuid"
 )
@@ -48,11 +49,7 @@ func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 
 	err = handler.service.CreateCustomer(newCustomer)
 	if err != nil {
-		if errors.Is(err, ErrCustomerAlreadyExists) {
-			http.Error(res, err.Error(), http.StatusConflict)
-			return
-		}
-		http.Error(res, err.Error(), http.StatusInternalServerError)
+		shared.HandleError(res, err)
 		return
 	}
 
@@ -84,7 +81,7 @@ func (handler *Handler) List(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Content-Type", "application/json")
 	customers, err := handler.service.GetAllCustomers()
 	if err != nil {
-		http.Error(res, err.Error(), http.StatusInternalServerError)
+		shared.HandleError(res, err)
 		return
 	}
 
