@@ -1,8 +1,9 @@
 package customer
 
 import (
-	"errors"
 	"time"
+
+	"customer-api/internal/shared"
 )
 
 // Entity definition for Customer
@@ -17,4 +18,5 @@ type Customer struct {
 }
 
 // Error definitions
-var ErrCustomerAlreadyExists = errors.New("customer already exists")
+var ErrCustomerAlreadyExists = shared.DomainError{Status: 409, Message: "customer already exists"}
+var ErrCustomerNotFound = shared.DomainError{Status: 404, Message: "customer not found"}
