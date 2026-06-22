@@ -4,9 +4,12 @@ Estructura actual de directorios y archivos del proyecto.
 
 ```text
 customer-api/
+├── .air.toml
 ├── .gitignore
+├── Makefile
 ├── go.mod
 ├── go.sum
+├── README.md
 ├── cmd/
 │   └── api/
 │       └── main.go
@@ -21,8 +24,14 @@ customer-api/
 │   │   ├── handler.go
 │   │   ├── repository.go
 │   │   └── service.go
-│   └── phone/
-└── platform/
-    └── storage/
-        └── database.go
+│   ├── phone/
+│   └── shared/
+│       └── errors.go
+├── platform/
+│   └── storage/
+│       ├── database.go
+│       └── generic_repository.go
+└── tmp/
+    ├── build-errors.log
+    └── main
 ```
