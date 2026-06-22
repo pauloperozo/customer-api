@@ -5,11 +5,7 @@ import (
 	"net/http"
 
 	"customer-api/internal/shared"
-
-	"github.com/go-playground/validator/v10"
 )
-
-var validate = validator.New()
 
 // Create handles POST /customers
 // @Summary      Crear un nuevo cliente
@@ -36,11 +32,8 @@ func (handler *Handler) CreateCustomer(res http.ResponseWriter, req *http.Reques
 		return
 	}
 
-	if err := validate.Struct(body); err != nil {
-		shared.HandleError(res, shared.DomainError{
-			Status:  http.StatusBadRequest,
-			Message: err.Error(),
-		})
+	if err := handler.validate.Struct(body); err != nil {
+		shared.HandleError(res, ErrCustomerInvalidData)
 		return
 	}
 
