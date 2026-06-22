@@ -15,6 +15,10 @@ func (error DomainError) Error() string {
 	return error.Message
 }
 
+type ErrorResponse struct {
+	Message string `json:"message"`
+}
+
 func HandleError(w http.ResponseWriter, err error) {
 	var domainErr DomainError
 	status := http.StatusInternalServerError
@@ -27,5 +31,5 @@ func HandleError(w http.ResponseWriter, err error) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(status)
-	_ = json.NewEncoder(w).Encode(map[string]string{"message": message})
+	_ = json.NewEncoder(w).Encode(ErrorResponse{Message: message})
 }

@@ -25,9 +25,9 @@ func NewHandler(service Service) *Handler {
 // @Produce      json
 // @Param        customer  body      CreateCustomerRequest  true  "Datos del cliente a crear"
 // @Success      200       {object}  ResponseCustomer
-// @Failure      400       {object}  map[string]string  "JSON inválido o malformado"
-// @Failure      409       {object}  map[string]string  "El email ya está registrado"
-// @Failure      500       {object}  map[string]string  "Error interno del servidor"
+// @Failure      400       {object}  shared.ErrorResponse "JSON inválido o malformado"
+// @Failure      409       {object}  shared.ErrorResponse "El email ya está registrado"
+// @Failure      500       {object}  shared.ErrorResponse "Error interno del servidor"
 // @Router       /customers [post]
 func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 
@@ -35,7 +35,10 @@ func (handler *Handler) Create(res http.ResponseWriter, req *http.Request) {
 	var body CreateCustomerRequest
 	err := json.NewDecoder(req.Body).Decode(&body)
 	if err != nil {
-		http.Error(res, err.Error(), http.StatusBadRequest)
+		shared.HandleError(res, shared.DomainError{
+			Status:  http.StatusBadRequest,
+			Message: "JSON inválido o malformado",
+		})
 		return
 	}
 
