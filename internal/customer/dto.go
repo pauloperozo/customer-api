@@ -1,10 +1,10 @@
 package customer
 
 type CreateCustomerRequest struct {
-	FirstName string `json:"first_name" binding:"required"`
-	LastName  string `json:"last_name" binding:"required"`
-	Email     string `json:"email" binding:"required,email"`
-	Language  string `json:"language" binding:"required"`
+	FirstName string `json:"first_name" validate:"required"`
+	LastName  string `json:"last_name" validate:"required"`
+	Email     string `json:"email" validate:"required,email"`
+	Language  string `json:"language" validate:"required"`
 }
 
 type CreateCustomerResponse struct {

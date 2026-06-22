@@ -1,6 +1,10 @@
 package customer
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/google/uuid"
+)
 
 type Service struct {
 	repo Repository
@@ -11,7 +15,6 @@ func NewService(repo Repository) *Service {
 }
 
 func (service *Service) CreateCustomer(customer *Customer) error {
-
 	existingCustomer, err := service.repo.GetByEmail(customer.Email)
 	if err != nil {
 		return fmt.Errorf("error checking existing customer: %w", err)
@@ -19,6 +22,10 @@ func (service *Service) CreateCustomer(customer *Customer) error {
 
 	if existingCustomer != nil {
 		return ErrCustomerAlreadyExists
+	}
+
+	if customer.ID == "" {
+		customer.ID = uuid.NewString()
 	}
 
 	return service.repo.Create(customer)

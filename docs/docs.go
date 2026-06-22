@@ -38,31 +38,10 @@ const docTemplate = `{
                             }
                         }
                     },
-                    "400": {
-                        "description": "JSON inválido o malformado",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
-                    "409": {
-                        "description": "El email ya está registrado",
-                        "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
-                        }
-                    },
                     "500": {
                         "description": "Error interno del servidor",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/customer-api_internal_shared.ErrorResponse"
                         }
                     }
                 }
@@ -100,28 +79,19 @@ const docTemplate = `{
                     "400": {
                         "description": "JSON inválido o malformado",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/customer-api_internal_shared.ErrorResponse"
                         }
                     },
                     "409": {
                         "description": "El email ya está registrado",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/customer-api_internal_shared.ErrorResponse"
                         }
                     },
                     "500": {
                         "description": "Error interno del servidor",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": {
-                                "type": "string"
-                            }
+                            "$ref": "#/definitions/customer-api_internal_shared.ErrorResponse"
                         }
                     }
                 }
@@ -129,6 +99,14 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "customer-api_internal_shared.ErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
         "internal_customer.CreateCustomerRequest": {
             "type": "object",
             "required": [
